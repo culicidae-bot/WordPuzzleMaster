@@ -1,0 +1,43 @@
+name: Development Server
+
+on:
+  workflow_dispatch:
+    inputs:
+      duration:
+        description: 'How long to keep the server running (in minutes)'
+        required: true
+        default: '60'
+        type: number
+
+jobs:
+  start-dev-server:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup Ngrok
+        uses: andelf/ngrok-action@v1
+        with:
+          port: 3000
+          region: us
+
+      - name: Start development server
+        run: |
+          echo "Starting development server..."
+          echo "Server will be available at the Ngrok URL above"
+          echo "Server will run for ${{ github.event.inputs.duration }} minutes"
+          npm run dev &
+          sleep $((${{ github.event.inputs.duration }} * 60))
+        env:
+          NODE_ENV: development

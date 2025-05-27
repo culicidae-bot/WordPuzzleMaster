@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boggle Blitz Online</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen">
+            <h1>Boggle Blitz Online</h1>
+            <div class="form-group">
+                <input type="text" id="nickname-input" placeholder="Enter your nickname" maxlength="20">
+            </div>
+            <div class="button-group">
+                <button id="create-room-btn" class="btn primary">Create Room</button>
+                <button id="join-room-btn" class="btn secondary">Join Room</button>
+            </div>
+            <div id="room-code-input" class="form-group hidden">
+                <input type="text" id="room-code" placeholder="Enter 6-digit room code" maxlength="6" pattern="\d{6}">
+                <button id="submit-join-btn" class="btn primary">Join</button>
+            </div>
+        </div>
+
+        <!-- Lobby Screen -->
+        <div id="lobby-screen" class="screen hidden">
+            <h2>Game Lobby</h2>
+            <div class="room-info">
+                <p>Room Code: <span id="room-code-display"></span></p>
+                <button id="copy-room-code" class="btn small">Copy</button>
+            </div>
+            <div class="game-settings">
+                <label for="grid-size">Grid Size:</label>
+                <select id="grid-size" disabled>
+                    <option value="4">4x4</option>
+                    <option value="5">5x5</option>
+                </select>
+            </div>
+            <div class="player-info">
+                <p>Players: <span id="player-count">1</span>/6</p>
+                <ul id="players" class="player-list"></ul>
+            </div>
+            <div class="button-group">
+                <button id="start-game-btn" class="btn primary" disabled>Start Game</button>
+                <button id="leave-lobby-btn" class="btn secondary">Leave Lobby</button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen hidden">
+            <div class="game-header">
+                <div class="timer">Time: <span id="timer">60</span>s</div>
+                <button id="leave-game-btn" class="btn secondary">Leave Game</button>
+            </div>
+            <div class="game-board-container">
+                <div id="game-board" class="game-board"></div>
+            </div>
+            <div class="game-controls">
+                <div class="word-input-group">
+                    <input type="text" id="word-input" placeholder="Type or select letters" readonly>
+                    <button id="submit-word-btn" class="btn primary" disabled>Submit</button>
+                </div>
+                <div class="scoreboard">
+                    <h3>Scoreboard</h3>
+                    <ul id="scoreboard-list"></ul>
+                </div>
+                <div class="player-words">
+                    <h3>Your Words</h3>
+                    <ul id="player-words"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- End Round Screen -->
+        <div id="end-round-screen" class="screen hidden">
+            <h2>Round Complete!</h2>
+            <div class="final-scores">
+                <h3>Final Scores</h3>
+                <ul id="final-scoreboard"></ul>
+            </div>
+            <div class="button-group">
+                <button id="play-again-btn" class="btn primary">Play Again</button>
+                <button id="leave-game-end-btn" class="btn secondary">Leave Game</button>
+            </div>
+        </div>
+
+        <!-- Error Modal -->
+        <div id="error-modal" class="modal hidden">
+            <div class="modal-content">
+                <h3>Error</h3>
+                <p id="error-message"></p>
+                <button id="error-close-btn" class="btn primary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+</body>
+</html> 
