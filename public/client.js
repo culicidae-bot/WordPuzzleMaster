@@ -1,3 +1,6 @@
+// Import Socket.IO client
+import { io } from "socket.io-client";
+
 // Game state
 let socket;
 let currentRoom = null;
@@ -103,8 +106,9 @@ function initializeSocket() {
 // Screen Management
 function showScreen(screenName) {
     Object.values(screens).forEach(screen => {
-        screen.classList.remove('active');
+        screen.classList.add('hidden');
     });
+    screens[screenName].classList.remove('hidden');
     screens[screenName].classList.add('active');
 }
 
@@ -344,4 +348,4 @@ function resetGame() {
 }
 
 // Initialize the game
-document.addEventListener('DOMContentLoaded', initializeSocket); 
+document.addEventListener('DOMContentLoaded', initializeSocket);
